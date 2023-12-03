@@ -15,22 +15,6 @@ $message_text = stripslashes($message_text);
 $message_text = htmlspecialchars($message_text);
 $message_text = trim($message_text);
 
-// if (isset($_SESSION['profile'])) {
-//         $sql = "INSERT INTO messages (sender_id, recipient_id, message_text, timestamp) VALUES ('$sender_id', '$recipient_id', '$message_text', NOW())";
-//     if (mysqli_query($connect, $sql)) {
-//         $_SESSION['send_message_valid'] = 'Ваше повідомлення відправлене користувачу';
-//         header('Location: ../customer/message_user.php');
-//     } else {
-//         echo 'Помилка: ' . mysqli_error($connect);
-//     }
-// } else {
-//     echo 'Невдалий запит';
-// }
-
-
-
-
-
 if (isset($_SESSION['profile'])) {
 
     // Перевірте, чи поле message_text не є порожнім

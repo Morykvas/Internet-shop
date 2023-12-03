@@ -3,7 +3,6 @@
     *   Cторінка де є список користувачів які зареєструвались 
     *   Вибраному користувачу можна написати повідомлення у випадку якщо ви авторизувались у свій акаунт
     */
-
     session_start(); 
     if(!isset($_SESSION)) {echo 'сесія не працює';} 
     define('CSS_DIR','../');
@@ -11,8 +10,6 @@
     require '../connect.php'; 
 
 ?>
-
-
 <section class="users-page-data">
     <div class="container">
         <div class="wrapper-users-data">
@@ -56,14 +53,12 @@
                             */
                            ?>
                             <?php
-                             if(isset($_SESSION['profile'])) 
-                             { 
-                                $_SESSION['recipient_id'] = $row['user_id'];
-                                echo '<a href="../customer/message_user.php?user_id=' .  $_SESSION['recipient_id'] .'">' . "Написати" . '</a>';
-                             } 
-                          
-                             ?>
-                           
+                                if(isset($_SESSION['profile'])) 
+                                { 
+                                    $_SESSION['recipient_id'] = $row['user_id'];
+                                    echo '<a href="../customer/message_user.php?user_id=' .  $_SESSION['recipient_id'] .'">' . "Написати" . '</a>';
+                                } 
+                            ?>
                         </div>
                     <?php endwhile; ?>
                 <?php endif; ?>            

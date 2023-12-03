@@ -1,4 +1,7 @@
-<?php 
+<?php
+/**
+ * обробник у якому ми можемо редагувати продукт натсторінці private-products-page.php 
+ */
 include '../connect.php';
 
 $product_id   = variableValidation($_POST['product_id']);

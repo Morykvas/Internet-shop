@@ -1,4 +1,8 @@
 <?php 
+    /**
+     * сторінка на якій ми вносимо товар, вказуємо параметри товару та та місце де він буде відображатись
+     * на головній сторінці всіх продукті або ж на закритій сторінці користувача
+     */
     session_start();  
     if(!isset($_SESSION)) { echo 'сесія непрацює';}
     include_once "../connect.php";
@@ -41,6 +45,19 @@
                             <input type="radio" name="is_order" value="two"> 
                             <span class="switch-span" >публічний</span>  
                         </div>
+                        <?php  
+                            $selectCategories = 'SELECT category_name FROM categories';
+                            $resultCategories = mysqli_query($connect, $selectCategories);
+                        ?> 
+                        <label for="categiries">Вибір категорії</label>
+                        <select name="categiries" class="categiry_select">
+                            <option value="">Категорія</option>
+                            <?php  while($row =  mysqli_fetch_assoc( $resultCategories )){
+                                    $categories = $row['category_name'];
+                                    echo '<option value=' . $categories . '>' . $categories . '</option>';
+                                }
+                            ?>
+                        </select>
 
                         <input type="submit" value="Викласти">
             <?php endif; ?>

@@ -1,5 +1,5 @@
 
-@import './css/mystyle.css';
+/* @import './css/mystyle.css'; */
 html,
 body {
 margin: 0;
@@ -615,7 +615,7 @@ input:checked + .slider:before {
     width: 300px;
 } */
 
-.products_card {
+.products_card, .products_card_design  {
     background-color: white;
     max-width: 310px;
     width: 100%;
@@ -628,14 +628,31 @@ input:checked + .slider:before {
     margin-bottom: 40px;
     border-radius: 25px;
     box-shadow: 0px 5px 18px 0px hsla(0, 0%, 0%, 0.12);
-    
+    margin-right: 35px; 
 }
+.products_card_design {
+    max-width: 302px;
+    width: 100%;
+    max-height: 460px;
+}
+.products_card:nth-child(2n) {
+        margin-right: 0;
+}
+.products_card:last-child {
+    margin-right: 0;
+}
+.products_card_design:nth-child(2n) {
+    margin-right: 0;
+}
+
 .my_products {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: end;
     padding-bottom: 100px;
     margin-top: 20px;
+    width: 800px;
+
 }
 .tittle-products {
     color: red;
@@ -746,4 +763,128 @@ input:checked + .slider:before {
     padding: 10px;
     color: black;
    
+}
+.design-product-page {
+    min-height: 100vh;
+    background:  rgb(247, 189, 189);
+    padding: 90px 0 150px 0;
+}
+.wrapper-content {
+ display: flex;
+ justify-content: space-between;
+ margin-top: 40px;
+}
+.item-products-design {
+    /* max-width: 640px;
+    width: 100%; */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.basket_link {
+    margin-right: 15px;
+}
+.item-radio-mail {
+    margin-bottom: 15px;
+}
+.select-city {
+    width: 100%;
+    margin-bottom: 20px;
+    background-color: transparent;
+    border: 2px solid white;
+}
+
+.payment-page {
+  min-height: 100vh;
+  height: 100%;
+
+}
+.wrapper-payment {
+    padding: 100px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.payment-form {
+    background-color: rgb(0, 238, 255);
+}
+
+.wrapp-cvv-exp-year {
+    display: flex;
+    justify-content: space-between;
+}
+
+.wrapp-cvv-exp-year input{
+    width: 125px;
+}
+
+
+.wrapp-number-card {
+    display: flex;
+    flex-direction: column;
+    /* display: none; */
+}
+.wrapp-user-data {
+    display: flex;
+}
+.wrapp-user-data input {
+    width: 223px;
+}
+.form-checkout {
+   max-width: 540px;
+}
+.label {
+    display: flex;
+    justify-content: space-between;
+}
+.label span {
+    width: 123px;
+    color: black;
+}
+.vrapper-radio {
+    display: flex;
+    justify-content: space-between;
+}
+.title-form {
+    padding: 0;
+    margin:0 0 10px 0;
+}
+
+.wrapp-number-card, .label, .wrapp-cvv-exp-year {
+    /* display: none; */
+}
+
+.categiry_select { 
+    width: 100%;
+    margin-bottom: 30px;
+    background-color: rgb(105, 179, 229);
+    border-color: white;
+}
+.wrapper_content_products {
+    display: flex;
+}
+.sidebar_categories_select {
+    width: 300px;
+    border: 2px solid white;
+    margin-top: 20px;   
+    box-sizing: border-box;
+    padding: 30px;
+    border-radius: 25px;
+    box-shadow: 0px 5px 18px 0px hsla(0, 0%, 0%, 0.12);
+    min-height: 200px;
+    height: 100%;
+}
+.form-select_category {
+    padding:0;
+    border: none;
+}
+.category_button_select {
+    margin-top: 20px;
+}
+.select_sort {
+    width: 100%;
+    border-color: white;
+    color: white;
+    background-color: rgb(247, 189, 189);
+    margin-bottom: 15px;
 }

@@ -1,62 +1,59 @@
 <?php 
+/**
+ * файли для обробки даних при передачі з кошика до оформлення 
+ * 
+ */
 session_start();
 if(!isset($_SESSION)) { echo 'сесія непрацює';}
 include_once '../connect.php';
 
-$buyQuontity =  variableValidation($_POST['buy_quontity']);
-$productId = variableValidation($_POST['product_id']);
-$userId = variableValidation($_POST['user_id']);
+$buyQuontity = variableValidation($_POST['buy_quontity']);
+$productId   = variableValidation($_POST['product_id']);
+$userId      = variableValidation($_POST['user_id']);
 
 try {
-   
-    if($buyQuontity && $productId && $userId) {
+    if ($buyQuontity && $productId && $userId) {
         header('Location: ../pages/basket-page.php');
+         # отримую поточну кількість продукту в таблиці products
         $sqlSelectProduct = "SELECT product_quontity FROM products WHERE product_id = $productId";
-        $sqlResultProducts = mysqli_query($connect, $sqlSelectProduct);
-        
-        if( $row = mysqli_fetch_assoc($sqlResultProducts) ) {
-        
-            $sqlSelectQuota = "SELECT * FROM quota WHERE user_id =$userId AND product_id=$productId";
+        $resultSelectProducts = mysqli_query($connect, $sqlSelectProduct);
+
+        if ($row = mysqli_fetch_assoc($resultSelectProducts)) {
+            $currentQuontity = $row['product_quontity'];
+            
+            # отримаю поточну кількість продукту в таблиці quota
+            $sqlSelectQuota = "SELECT product_quontity FROM quota WHERE user_id = $userId AND product_id = $productId";
             $resultSelectQuota = mysqli_query($connect, $sqlSelectQuota);
-            
-            if( $row = mysqli_fetch_assoc($resultSelectQuota) ) {
-                $currentQuontity = $row['product_quontity'];
+
+            if ($row = mysqli_fetch_assoc($resultSelectQuota)) {
+                $currentQuotaQuontity = $row['product_quontity'];
             } else {
-                throw new Exception('Отрити дані кількості пролукту з таблиці quota не вдалось');
+                throw new Exception('Не вдалося отримати дані кількості продукту з таблиці quota');
             }
 
-            $excess = $buyQuontity - $currentQuontity;
-            $positiveExcess = abs($excess);
-            
-            $setQuontity = 0;
-            if($buyQuontity > $currentQuontity  ) {
-                # Замовлення більше ніж поточне число
-                $setQuontity = $positiveExcess;
-                $setSumQuontity =  $currentQuontity  -  $setQuontity;
+            # Розрахунок різниці між замовленою кількістю і поточною кількістю
+            $difference = $buyQuontity - $currentQuotaQuontity;
+            $positiveDifference = abs($difference);
+            $newProductQuontity = $currentQuontity - $positiveDifference;
+          
+            $sqlUpdateProducts = "UPDATE products SET product_quontity = $newProductQuontity, sales_count = sales_count  + $positiveDifference WHERE product_id = $productId";
 
-            }elseif ($buyQuontity < $currentQuontity) {
-                # Замовлення менше ніж число 
-                $setQuontity = $positiveExcess;
-                $setSumQuontity =  $currentQuontity  + $setQuontity;
-            }
-
-            $sqlUpdateProducts = "UPDATE products SET product_quontity=$setSumQuontity WHERE product_id=$productId";
             $resultUpdateProducts = mysqli_query($connect, $sqlUpdateProducts);
-            if($resultUpdateProducts) {
+            if ($resultUpdateProducts) {
 
-                $sqlUpdateQuota = "UPDATE quota SET product_quontity=0 WHERE product_id=$productId";
-                $resultUpdateQuota = mysqli_query($connect, $sqlUpdateQuota);
+                    $sqlUpdateQuota = "UPDATE quota SET product_quontity = CASE WHEN $buyQuontity > product_quontity THEN product_quontity + $buyQuontity - product_quontity WHEN $buyQuontity < product_quontity THEN product_quontity - (product_quontity - $buyQuontity) ELSE product_quontity END WHERE user_id = $userId AND product_id = $productId";
+                    $resultUpdateQuota = mysqli_query($connect, $sqlUpdateQuota);
 
-                if(!$resultUpdateQuota) {
-                    throw new Exception('не вдалось оновити табилцю quota');
+                if (!$resultUpdateQuota) {
+                    throw new Exception('Не вдалося оновити таблицю quota');
                 }
-                
             } else {
-                throw new Exception('кількість товару не не повернулось в products');
+                throw new Exception('Кількість товару не була оновлена в products');
             }
-        } 
+        } else {
+            throw new Exception('Не вдалося отримати дані кількості продукту з таблиці products');
+        }
     }
- 
 } catch (Exception $e) {
     error_log("Файл: " . $e->getFile() . "  Рядок: " . $e->getLine() . "  Повідомлення: " . $e->getMessage() . PHP_EOL, 3, "../var/log/buy-products.log");
 }

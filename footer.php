@@ -7,7 +7,6 @@
                 </div>
             </div>
             <script src="<?= SCRIPT_DIR; ?>min.js"></script>
-            <script src="https://js.stripe.com/v3/"></script>
             <script src="<?= SCRIPT_DIR; ?>myScripts.js"></script>
         </footer>
     </body>

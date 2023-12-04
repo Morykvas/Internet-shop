@@ -1,8 +1,4 @@
 <?php 
-/**
- * сторінка для редагування продукту 
- * тут знаходиться форма в якій можна вказати будь які зміни в описі для редагування 
- */
     session_start();  
     if(!isset($_SESSION)) { echo 'сесія непрацює';}
     define('CSS_DIR', '../');
@@ -16,7 +12,7 @@
     </div>
     <div class="update-products"> 
         <?php 
-        //    echo $product_id = $_GET['product_id'];  
+           echo $product_id = $_GET['product_id'];  
         ?>
         <form class="form_product" action="../data_processor/edit-products.php"  method="post"  enctype="multipart/form-data">
                 <input type="hidden" name="product_id" value="<?= $product_id; ?>">

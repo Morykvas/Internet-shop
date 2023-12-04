@@ -93,7 +93,7 @@ try {
         throw new Exception('користувач ввів вже зареєстрований емейл, та паролі які не збігаються');
     } elseif ($count > 0) {
         #Значення існує в базі даних, виводимо повідомлення про існуючий емейл
-        $_SESSION['email_error'] = $messageEmailError;  
+        $_SESSION['email_error'] = $messageEmailError;
         header('Location: ../pages/registration-page.php');
         throw new Exception('користувач ввів вже зареєстрований Email');
     } elseif ($password != $passwordTwo) {

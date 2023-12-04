@@ -1,16 +1,9 @@
 <?php 
-
-/**
- * обробник для додавання продукту в кошик
- * тут додається продутк в табилицю quota де зберігається інформація про продукт та скільки його будло додано в кошик
- * робиться апдейт таблиці продукту який був доданий в кошик і мінусується кількість яку продукту яку додали
- * також підсумовується ціна відповідно до кількості замовленого продукту
- */
 include '../connect.php';
 
 $user_id          =  variableValidation($_POST['user_id']);
 $product_id       =  variableValidation($_POST['product_id']);
-$product_quontity =  variableValidation($_POST['product_quontity']);
+$product_quontity = variableValidation($_POST['product_quontity']);
 
 try {
     
@@ -25,7 +18,7 @@ try {
             $totalQuontity = $currentProductQuantity - $product_quontity; 
 
            
-            $sqlUpdate = "UPDATE products SET product_quontity = $totalQuontity, sales_count = sales_count + $product_quontity   WHERE product_id = $product_id";
+            $sqlUpdate = "UPDATE products SET product_quontity= $totalQuontity WHERE product_id = $product_id";
             $resultUpdate = mysqli_query($connect, $sqlUpdate );
             if(!$resultUpdate) {
                 throw new Exception('Товар не оновив кількість після завантаження в кошик');

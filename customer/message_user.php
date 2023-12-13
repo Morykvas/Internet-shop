@@ -15,16 +15,10 @@
    
 <section class="user-message-page">
         <div class="container">
+            <div class="button-back">
+                <a href="../pages/users-page.php">повернутись</a>
+            </div>
             <div class="wraper-user-message-page">
-            <a href="../pages/users-page.php">Назад</a>
-                <h2>Повідомлення користувачеві</h2>
-                <?php  
-                    /**
-                     * type="hidden": Це атрибут, який вказує тип введення. У цьому випадку,
-                     * тип "hidden" означає, що це поле буде прихованим на сторінці.
-                     * в якого знаячення буде індефвікатором користувача якому ми писатимемо 
-                     */
-                ?>
                 <?php
                     if (isset($_SESSION['profile'])) {
                         if (isset($_GET['user_id'])) {
@@ -38,7 +32,8 @@
                     } 
                     
                  ?>
-                <form method="post" action="../data_processor/send_message.php">
+                <form class="form_for_message_user" method="post" action="../data_processor/send_message.php">
+                    <h2 class="title">Повідомлення для користувача</h2>
                     <input type="hidden" name="user_id" value="<?= $user['user_id']; ?>">
                     <textarea class="message_user_textarea" name="message_for_user" placeholder="Повідомлення" ></textarea>
                     <input type="submit" value="Відправити">

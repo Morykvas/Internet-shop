@@ -17,9 +17,11 @@
         $result = mysqli_query($connect, $sql);
     ?>
     <div class="container">
+        <div class="item_button_back">
+            <a href="../customer/index.php">повернутись</a>
+        </div>
         <div class="wrapper-products">
             <div class="wrapper-title">
-                <a href="../customer/index.php">повернутись</a>
                 <h1>Мої продукти</h1>
             </div>
             <div class="my_products">
@@ -29,17 +31,17 @@
                             <img src="data:image/jpeg;base64, <?= base64_encode($row['product_image']);?>" />
                         </div>
                         <div class="wrapp-desc">
-                        <div class="item-desc">
-                                <span class="tittle-products">Назва:</span><p><?= $row['product_name']; ?></p>
+                            <div class="item-desc">
+                                <h4><?= $row['product_name']; ?></h4>
                             </div>
                             <div class="item-desc">
-                                <span class="tittle-products">Опис:</span><p><?= $row['product_description']; ?></p>
+                                <p><?= $row['product_description']; ?></p>
                             </div>
                             <div class="item-desc">
-                                <span class="tittle-products">Ціна:</span><p><?= $row['product_price']; ?></p>
+                                <span class="tittle-quontity">Кількість:</span><p class="num-quontity"><?= $row['product_quontity']; ?><span class="tittle-products">шт<span></p>
                             </div>
                             <div class="item-desc">
-                                <span class="tittle-products">Кількість:</span><p><?= $row['product_quontity']; ?></p>
+                                <p class="price-card"><?= $row['product_price']; ?></p><span>грн</span>
                             </div>
                         </div>
                         <?php

@@ -10,7 +10,9 @@ $prodPrice    = variableValidation($_POST['product_price']);
 $prodDesc     = variableValidation($_POST['product_description']);
 $prodQuan     = variableValidation($_POST['product_quontity']);
 $user_id      = variableValidation($_POST['user_id']);
-$imageProduct = variableValidation($_FILES['file']['tmp_name']);
+$imageProduct =  $_FILES['file']['tmp_name'];
+$imageContent = file_get_contents($imageProduct);
+$escapedImageContent = mysqli_real_escape_string($connect, $imageContent);
 
 try {
     
@@ -33,13 +35,11 @@ if ($product_id) {
         if (!empty($user_id)) {
             $updateFields[] = "user_id = '$user_id'";
         }
-        if (!empty($imageProduct)) {
-            $imageContent = file_get_contents($imageProduct);
-            $escapedImageContent = mysqli_real_escape_string($connect, $imageContent);
+        if (!empty($escapedImageContent)) {
             $updateFields[] = "product_image = '$escapedImageContent'";
         }
-
         $updateFieldsString = implode(', ', $updateFields);
+
         if (!empty($updateFields)) {
             $sql = "UPDATE products SET $updateFieldsString WHERE product_id = $product_id";
 
@@ -49,17 +49,15 @@ if ($product_id) {
                 validationMessage('Ви успішно внесли зміни у свій продукт');
                 header('Location: ../pages/edit-product-page.php');
             } else {
-                throw new Exception('Помилка при виконанні запиту');
+                throw new Exception('Помилка при виконанні запиту для внесення змін у  продук');
             }
         } else {
-            invalidMessage('Вкажіть дані продукту які ви хочете оновити');
+            invalidMessage('Вкажіть дані продукту які ви хочете оновити ');
             header('Location: ../pages/edit-product-page.php');
             throw new Exception('користувач не заповнив жодного поля для редагування');
         }
     } else {
-        invalidMessage('Вкажіть дані продукту які ви хочете оновити');
-        header('Location: ../pages/edit-product-page.php');
-        throw new Exception('користувач не заповнив жодного поля для редагування');
+        throw new Exception('відсутній id продукту для зміни параментрів');
     }
 } catch (Exception $e) {
     error_log("Файл: " . $e->getFile() . "  Рядок: " . $e->getLine() . "  Повідомлення: " . $e->getMessage() . PHP_EOL, 3, "../var/log/edit-products.log");

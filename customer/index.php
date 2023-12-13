@@ -11,21 +11,24 @@
     include '../connect.php';
     define('CSS_DIR', '../');   
     include '../header.php';
-//     error_reporting(E_ALL);
-// ini_set('display_errors', 'On');
-        
 ?>
 
 <section class='user-page'>
     <div class="container">
+        <div class="wrapper-button-exit">
+            <a href="../data_processor/session-exit.php">Вийти</a>
+        </div>
         <div class="wrapper-user-page">
             <div class="item-links">
-              <?php  if($_SESSION['profile']) {
-                    echo '<a href="../data_processor/session-exit.php">Вийти</a>';
-                    echo '<a href="../pages/users-page.php">Користувачі</a>';
-                    echo '<a href="../pages/set-products-page.php">Завантажити продукт</a>';
-                    echo '<a href="../pages/all-products-page.php">Сторінка продуктів</a>';
-                }?>
+              <?php  if($_SESSION['profile']) : ?>
+                    <?php   echo '<h2>Вітаємо! ' . $_SESSION['profile']['firstname'] . ' ' . $_SESSION['profile']['lastname'] . ' Ви зайшли у свій акаунт</h2>'; ?>
+                    <div class="wrapper-links">
+                        <a href="../pages/users-page.php">Користувачі</a>
+                        <a href="../pages/set-products-page.php">Завантажити продукт</a>
+                        <a href="../pages/all-products-page.php">Сторінка продуктів</a>
+                        <a href="../pages/private-products-page.php">Мої продукти</a>
+                    </div>
+                <?php endif; ?>
             </div>
             <div class="item-user"> 
             <?php 
@@ -38,7 +41,6 @@
 
                     try {   
                         if ($_SESSION['profile']) {
-                            echo '<h2>Вітаємо! ' . $_SESSION['profile']['firstname'] . ' ' . $_SESSION['profile']['lastname'] . ' Ви зайшли у свій акаунт</h2>';
                             $user_id = $_SESSION['profile']['user_id'];
                             $show = isset($_GET['show']) ? $_GET['show'] : '';
 
@@ -55,7 +57,7 @@
                                 }
                                 echo '<a href="?show=sent">Відправлені</a>';
 
-                                echo '<a href="../pages/private-products-page.php">Мої продукти</a>';
+                            
 
                             echo '</div>';
                             

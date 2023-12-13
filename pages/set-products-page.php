@@ -12,29 +12,29 @@
  ?>
 <section class="products-page">
     <div class="container">
+        <div class="wrapp-tytle-link">
+            <a href="../customer/index.php">повернуись</a>
+        </div>
         <div class="wrapper-product-content">
             <?php if(isset($_SESSION['profile'])) : ?>
-                <div class="wrapp-tytle-link">
-                    <a href="../customer/index.php">повернуись</a>
-                    <h1 class="title-product">Set Products</h1>
-                </div>
-                <form class="form_product" action="../data_processor/set-process_product.php"  method="post"  enctype="multipart/form-data">
+                <form class="set_form_product" action="../data_processor/set-process_product.php"  method="post"  enctype="multipart/form-data">
+                    <h2 class="title">Завантажте продукт</h2>
                         <input type="hidden" name="user_id" value="<?= $_SESSION['profile']['user_id']; ?>">
-                        <label for="product_name">Назва продукту</label>
-                        <input type="text" name="product_name">
+                        
+                        <input type="text" name="product_name" placeholder="Назва продукту">
 
-                        <label for="product_price">Ціна продукту</label>
-                        <input type="text" name="product_price">
+                       
+                        <input type="text" name="product_price" placeholder="Ціна продукту">
 
-                        <label for="product_description">Опис продукту</label>
-                        <textarea class="product_area" name="product_description"></textarea>
+                       
+                        <textarea class="product_area" name="product_description" placeholder="Опис продукту"></textarea>
  
-                        <label for="product_quantity">Наявна кількість</label>
-                        <input type="text" name="product_quontity">
+                        
+                        <input type="text" name="product_quontity" placeholder="Наявна кількість">
 
-                        <label for="file">Оберіть фото:</label>
-                        <input type="file" name="file" accept="image/*">
-
+                        <label for="fileInput">Оберіть фото</label>
+                        <input value="Оберіть фото" type="file" name="file" accept="image/*" >
+      
                         <div class="item-radio">
 
                             <input type="radio" name="is_order" value="one">
@@ -49,7 +49,6 @@
                             $selectCategories = 'SELECT category_name FROM categories';
                             $resultCategories = mysqli_query($connect, $selectCategories);
                         ?> 
-                        <label for="categiries">Вибір категорії</label>
                         <select name="categiries" class="categiry_select">
                             <option value="">Категорія</option>
                             <?php  while($row =  mysqli_fetch_assoc( $resultCategories )){

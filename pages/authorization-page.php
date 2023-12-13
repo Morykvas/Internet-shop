@@ -20,13 +20,13 @@ include '../header.php';
 } ?>
     <section class="authorization-page">
         <div class="container">
+            <div class="item-back-title">
+                <a class="button-back" href="../index.php">повернутись</a>
+            </div>
             <div class="wrapper-autorization-form">
-                <div class="item-back-title">
-                    <a class="button-back" href="../index.php">назад</a>
-                    <h1 class="title">Авторизація</h1>
-                </div>
                 <form class="form-authorization"
                       action="../data_processor/autho.php" method="post">
+                      <h1 class="title">Авторизація</h1>
                     <input type="email" name="email" placeholder="email">
                     <input type="password" name="password" placeholder="pass">
                     <input class="submit-autho" type="submit" value="submit">

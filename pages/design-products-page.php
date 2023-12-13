@@ -13,11 +13,10 @@
 
 <section class="design-product-page">
     <div class="container">
-        <div class="wrapper-design-products">
-            <div class="item-title-design">
-                <h1>Оформлення покупки</h1>
+        <div class="item-title-design">
                 <a href="basket-page.php">повернутись</a>
-            </div>
+        </div>
+        <div class="wrapper-design-products">
             <div class="wrapper-content">
                 <?php 
                     $curentUserId = $_SESSION['profile']['user_id'];
@@ -34,25 +33,22 @@
                          'product_quontity' =>  $row['total_quontity'],
                         ];     
                       ?>
-                        <div class="products_card_design">
+                        <div class="products_card">
                             <div class="wrapp-image-card">
                                 <img src="data:image/jpg;base64, <?php echo  base64_encode($row['product_image']);?>" />
                             </div>
                             <div class="wrapp-desc">
                                 <div class="item-desc">
-                                    <span class="tittle-products">Назва:</span><p><?= $row['product_name']; ?></p>
+                                    <h4><?= $row['product_name']; ?></h4>
                                 </div>
                                 <div class="item-desc">
-                                    <span class="tittle-products">Опис:</span><p><?= $row['product_description']; ?></p>
+                                    <p><?= $row['product_description']; ?></p>
                                 </div>
                                 <div class="item-desc">
-                                    <span class="tittle-products">Загальна ціна:</span><p><?= $row['product_price'] * $row['total_quontity']; ?></p><span class="tittle-products">грн.</span>
+                                    <span class="tittle-quontity">Кількість:</span><p class="num-quontity"><?= $row['total_quontity']; ?><span class="tittle-products">шт<span></p>
                                 </div>
                                 <div class="item-desc">
-                                    <span class="tittle-products">Кількість:</span><p><?= $row['total_quontity']; ?></p>
-                                </div>
-                                <div class="item-desc">
-                                    <span class="tittle-products">Prod ID:</span><p><?= $row['product_id']; ?></p>
+                                    <p class="price-card"><?= $row['product_price']; ?></p><span>грн</span>
                                 </div>
                             </div>
                         </div>
@@ -106,7 +102,7 @@
                 ?>
                 <div class="item-form-design">
                     <form id="payment-form" class="form-checkout" action="../data_processor/design-products.php" method="post">
-                   
+                        <h2>Оформлення покупки</h2>
                         <input type="hidden" name="json_data"  value="<?php echo htmlspecialchars(json_encode($productIds)); ?>">
                         <div class="wrapp-user-data">
                             <div >
@@ -156,7 +152,7 @@
                             ?>
                         </select>
                        
-                        <div>
+                        <div class="wrapper-card-data">
                               
                             <h3 class="title-form">Оплата</h3>
                             <?php

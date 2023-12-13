@@ -14,10 +14,10 @@
     <title>Document</title>
 </head>
 <body>
+
 <header class="header">
-    <div class="container">
         <div class="wrapper-header">
             <h1>HEADER</h1>
         </div>
-    </div>
 </header>
+<main class="main">

@@ -7,18 +7,18 @@ session_start();
 if(!isset($_SESSION)) {'сесія не працює';}
 include_once '../connect.php';
 
-$category = variableValidation($_POST['order_category']);
-
+ echo $category = variableValidation($_POST['order_category']);
 try {
     if($category) {
         $sqlCategory = "SELECT category_name FROM categories WHERE category_id = '$category'";
         $resultCategory = mysqli_query($connect, $sqlCategory);
+
     
         while($row = mysqli_fetch_assoc($resultCategory)){
             $_SESSION['category_data'] = [
                 'category_name' => $row['category_name'],
                 'category_id'   => $category
-            ] ;
+            ];
         }
        
         header('Location: ../pages/products-categories-page.php');

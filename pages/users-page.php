@@ -12,20 +12,17 @@
 ?>
 <section class="users-page-data">
     <div class="container">
-        <div class="wrapper-users-data">
-            <div class="item-back-title">
-
+        <div class="item-back-title">
                 <?php  if(!isset($_SESSION['profile'])) {
-                    echo '<a class="button-back" href="../index.php">назад</a>';
+                    echo '<a class="button-back" href="../index.php">повенрутись</a>';
                 } else {
-                  echo '<a class="button-back" href="../customer/index.php">назад</a>';
+                  echo '<a class="button-back" href="../customer/index.php">повенрутись</a>';
                 }
                 
                 ?>
-                
-                <h1 class="title">Сторінка користувачів</h1>
-            </div>
-            
+        </div>
+        <div class="wrapper-users-data">
+            <h1 class="title">Cписок зареєстрованих користувачів</h1>
             <?php
                 /**
                  * роблю вибірку з таблиці юзерів
@@ -42,10 +39,12 @@
                 <?php if($result = mysqli_query($connect, $sql)) : ?>
                     <?php while($row = mysqli_fetch_array($result)) : ?>
                         <div class="item-users">
+                            <div class="item-data-users">
                             <span><?= 'ID:  '. $row['user_id'];?></span> 
                             <span><?= $row['firstname'];?></span>
                             <span><?= $row['lastname']. ' ,';?></span>
                             <span><?= $row['email']; ?></span>  
+                            </div>
                            <?php
                             /**
                             * посилання на сторінку де пожна написати користувачу

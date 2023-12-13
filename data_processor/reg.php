@@ -5,8 +5,9 @@
   */
 
 session_start();
-if(!isset($_SESSION)) { echo 'сесія непрацює';}
-require '../connect.php';
+if(!isset($_SESSION)) { echo 'сесія непрацює'; }
+// require_once '../connect.php';
+require_once '../connectdb.php';
 
 
 
@@ -102,6 +103,7 @@ try {
         header('Location: ../pages/registration-page.php');
         throw new Exception( 'користувач ввів паролі які не збігаються');
     } else {
+        
         #Значення не існує в базі даних і паролі збігаються, виконуємо INSERT запит
         $sql = "INSERT INTO `users`(`firstname`, `lastname`, `surname`, `tel`, `email`, `pass`) VALUES ('$first_name', '$last_name', '$surname', '$tel', '$email', '$password')";
         $sqlInsert = mysqli_query($connect, $sql);
@@ -123,29 +125,10 @@ try {
             throw new Exception('Помилка зєднання з базою даних:');
         }
     }
-    
-    // switch ($i) {
-    //     case 0:
-    //         echo "i equals 0";
-    //         break;
-    //     case 1:
-    //         echo "i equals 1";
-    //         break;
-    //     case 2:
-    //         echo "i equals 2";
-    //         break;
-    //     default:
-    //        echo "i is not equal to 0, 1 or 2";
-    // }
-
 } catch(Exception $e)   { 
     error_log("Файл: " . $e->getFile() . "  Рядок: " . $e->getLine() . "  Повідомлення: " . $e->getMessage() . PHP_EOL, 3, "../var/log/registration.log");
 }
 
 #Закриваємо з'єднання з базою даних
 mysqli_close($connect);
-
-
-
-
 

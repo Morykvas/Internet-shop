@@ -106,7 +106,7 @@ class ApiRequestor
     }
 
     /**
-     * @param 'delete'|'get'|'post' $method
+     * @param string     $method
      * @param string     $url
      * @param null|array $params
      * @param null|array $headers
@@ -128,7 +128,7 @@ class ApiRequestor
     }
 
     /**
-     * @param 'delete'|'get'|'post' $method
+     * @param string     $method
      * @param string     $url
      * @param callable $readBodyChunkCallable
      * @param null|array $params
@@ -295,8 +295,9 @@ class ApiRequestor
     /**
      * @static
      *
-     * @param string $disableFunctionsOutput - String value of the 'disable_function' setting, as output by \ini_get('disable_functions')
+     * @param string $disabledFunctionsOutput - String value of the 'disable_function' setting, as output by \ini_get('disable_functions')
      * @param string $functionName - Name of the function we are interesting in seeing whether or not it is disabled
+     * @param mixed $disableFunctionsOutput
      *
      * @return bool
      */
@@ -325,7 +326,7 @@ class ApiRequestor
         $uaString = 'Stripe/v1 PhpBindings/' . Stripe::VERSION;
 
         $langVersion = \PHP_VERSION;
-        $uname_disabled = self::_isDisabled(\ini_get('disable_functions'), 'php_uname');
+        $uname_disabled = static::_isDisabled(\ini_get('disable_functions'), 'php_uname');
         $uname = $uname_disabled ? '(disabled)' : \php_uname();
 
         $appInfo = Stripe::getAppInfo();
@@ -348,7 +349,6 @@ class ApiRequestor
             'X-Stripe-Client-User-Agent' => \json_encode($ua),
             'User-Agent' => $uaString,
             'Authorization' => 'Bearer ' . $apiKey,
-            'Stripe-Version' => Stripe::getApiVersion(),
         ];
     }
 
@@ -378,7 +378,7 @@ class ApiRequestor
 
         if ($params && \is_array($params)) {
             $optionKeysInParams = \array_filter(
-                self::$OPTIONS_KEYS,
+                static::$OPTIONS_KEYS,
                 function ($key) use ($params) {
                     return \array_key_exists($key, $params);
                 }
@@ -394,6 +394,9 @@ class ApiRequestor
         $absUrl = $this->_apiBase . $url;
         $params = self::_encodeObjects($params);
         $defaultHeaders = $this->_defaultHeaders($myApiKey, $clientUAInfo);
+        if (Stripe::$apiVersion) {
+            $defaultHeaders['Stripe-Version'] = Stripe::$apiVersion;
+        }
 
         if (Stripe::$accountId) {
             $defaultHeaders['Stripe-Account'] = Stripe::$accountId;
@@ -430,7 +433,7 @@ class ApiRequestor
     }
 
     /**
-     * @param 'delete'|'get'|'post' $method
+     * @param string $method
      * @param string $url
      * @param array $params
      * @param array $headers
@@ -467,11 +470,12 @@ class ApiRequestor
     }
 
     /**
-     * @param 'delete'|'get'|'post' $method
+     * @param string $method
      * @param string $url
      * @param array $params
      * @param array $headers
-     * @param callable $readBodyChunkCallable
+     * @param callable $readBodyChunk
+     * @param mixed $readBodyChunkCallable
      *
      * @throws Exception\AuthenticationException
      * @throws Exception\ApiConnectionException
